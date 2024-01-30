@@ -47,7 +47,7 @@ load_dotenv()
 app = FastAPI(title="AiHACCP API")
 
 # Substitua 'YOUR_OPENAI_API_KEY' pela sua chave de API da OpenAI
-openai.api_key = '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'
+openai.api_key = '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'
 
 class ChatRequest(BaseModel):
     message: str
