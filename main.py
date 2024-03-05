@@ -112,7 +112,7 @@ async def chat_with_assistant(request: ChatRequest):
         print(f"ASSISTANT: {all_messages.data[0].content[0].text.value}")
         return all_messages.data[0].content[0].text.value
     except Exception as e:
-        raise HTTPException(status_code=500, detasil=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
     
 
 @app.get("/")
