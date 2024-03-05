@@ -46,7 +46,7 @@ load_dotenv()
 
 app = FastAPI(title="AiHACCP API")
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("CHATGPT_API_KEY")
 if not openai.api_key:
     raise ValueError("A variável de ambiente CHATGPT_API_KEY não está definida.")
 
