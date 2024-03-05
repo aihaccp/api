@@ -51,26 +51,6 @@ openai.api_key = os.getenv("CHATGPT_API_KEY")
 
 class ChatRequest(BaseModel):
     message: str
-
-@app.post("/chat-with-assistant/")
-async def chat_with_assistant(request: ChatRequest):
-    try:
-        response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
-            messages=[
-                {"role": "user", "content": request.message}
-            ]
-        )
-
-        response_message = response.choices[0].message.content
-        # Usando uma expressão regular para encontrar todas as ocorrências de strings JSON
-        json_strings = re.findall(r'\{[^{}]*\}', response_message)
-        dados = json.dumps(json_strings)
-        lista_decodificada = json.loads(dados)
-        print(lista_decodificada)
-        return dados 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
     
 @app.post("/gpt-assistant/")
 async def chat_with_assistant(request: ChatRequest):
@@ -114,18 +94,4 @@ async def chat_with_assistant(request: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-
-@app.get("/")
-def read_root(api_key: str = Security(get_api_key)):
-    return {"Hello": "World"}
-
-@app.get("/public")
-def public():
-    """A public endpoint that does not require any authentication."""
-    return "Public Endpoint"
-
-@app.get("/private")
-def private(api_key: str = Security(get_api_key)):
-    """A private endpoint that requires a valid API key to be provided."""
-    return f"Private Endpoint. API Key: {api_key}"
 
