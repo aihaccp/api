@@ -55,7 +55,7 @@ class ChatRequest(BaseModel):
     message: str
     
 @app.post("/gpt-assistant/")
-async def chat_with_assistant(request: ChatRequest, _api_key: str = Depends(get_api_key)):
+async def chat_with_assistant(request: ChatRequest, api_key: str = Security(get_api_key)):
     try:
 
         thread = openai.beta.threads.create()
