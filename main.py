@@ -1,4 +1,4 @@
-from fastapi import HTTPException, status, Security, FastAPI
+from fastapi import HTTPException, status, Security, FastAPI, Depends
 from fastapi.security import APIKeyHeader, APIKeyQuery
 from dotenv import load_dotenv
 from pydantic import BaseModel
@@ -55,10 +55,9 @@ class ChatRequest(BaseModel):
     message: str
     
 @app.post("/gpt-assistant/")
-async def chat_with_assistant(request: ChatRequest):
+async def chat_with_assistant(request: ChatRequest, _api_key: str = Depends(get_api_key)):
     try:
-        # Abrindo e carregando os arquivos CSV
-        
+
         thread = openai.beta.threads.create()
         message = openai.beta.threads.messages.create(
             thread_id=thread.id,
